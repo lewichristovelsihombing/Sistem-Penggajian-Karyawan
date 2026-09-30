@@ -1,0 +1,96 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+struct Karyawan {
+    string nama;
+    int id;
+    int jamKerja;
+    double gajiPokok;
+    double tunjangan;
+    double potongan;
+};
+
+int main() {
+    Karyawan daftarKaryawan[50];
+    int jumlahKaryawan = 0; 
+    int pilihanMenu;
+
+    do {
+        cout << "\n===================================" << endl;
+        cout << "    SISTEM PENGGAJIAN KARYAWAN     " << endl;
+        cout << "===================================" << endl;
+        cout << "1. Input Data Karyawan" << endl;
+        cout << "2. Laporan Gaji" << endl;
+        cout << "3. Keluar" << endl;
+        cout << "-----------------------------------" << endl;
+        cout << "Pilih menu (1-3): ";
+        cin >> pilihanMenu;
+
+        if (pilihanMenu == 1) {
+            if (jumlahKaryawan >= 50) {
+                cout << "\n[Peringatan] Kapasitas penuh! Maksimal 50 karyawan." << endl;
+            } else {
+                cout << "\n--- Input Data Karyawan Ke-" << (jumlahKaryawan + 1) << " ---" << endl;
+                
+                cin.ignore(); 
+                cout << "Nama Lengkap    : ";
+                getline(cin, daftarKaryawan[jumlahKaryawan].nama);
+                
+                cout << "ID Karyawan     : ";
+                cin >> daftarKaryawan[jumlahKaryawan].id;
+                
+                cout << "Total Jam Kerja : ";
+                cin >> daftarKaryawan[jumlahKaryawan].jamKerja;
+                
+                cout << "Gaji Pokok      : ";
+                cin >> daftarKaryawan[jumlahKaryawan].gajiPokok;
+                
+                cout << "Potongan Absen  : ";
+                cin >> daftarKaryawan[jumlahKaryawan].potongan;
+
+                if (daftarKaryawan[jumlahKaryawan].jamKerja > 40) {
+                    daftarKaryawan[jumlahKaryawan].tunjangan = 50000;
+                    cout << "[Bonus] Kerja di atas 40 jam, mendapat tunjangan Rp 50.000!" << endl;
+                } else {
+                    daftarKaryawan[jumlahKaryawan].tunjangan = 0;
+                }
+
+                jumlahKaryawan++;
+                cout << "Data berhasil disimpan!" << endl;
+            }
+        } 
+        else if (pilihanMenu == 2) {
+            if (jumlahKaryawan == 0) {
+                cout << "\n[Info] Belum ada data. Silakan pilih Menu 1 terlebih dahulu." << endl;
+            } else {
+                cout << "\n==================================================" << endl;
+                cout << "               LAPORAN SLIP GAJI                  " << endl;
+                cout << "==================================================" << endl;
+                
+                for (int i = 0; i < jumlahKaryawan; i++) {
+                    double gajiBersih = (daftarKaryawan[i].jamKerja * daftarKaryawan[i].gajiPokok) 
+                                        + daftarKaryawan[i].tunjangan - daftarKaryawan[i].potongan;
+
+                    cout << "Karyawan ke-" << (i + 1) << endl;
+                    cout << "Nama        : " << daftarKaryawan[i].nama << endl;
+                    cout << "ID          : " << daftarKaryawan[i].id << endl;
+                    cout << "Jam Kerja   : " << daftarKaryawan[i].jamKerja << " jam" << endl;
+                    cout << "Gaji Pokok  : Rp " << daftarKaryawan[i].gajiPokok << endl;
+                    cout << "Tunjangan   : Rp " << daftarKaryawan[i].tunjangan << endl;
+                    cout << "Potongan    : Rp " << daftarKaryawan[i].potongan << endl;
+                    cout << "Gaji Bersih : Rp " << gajiBersih << endl;
+                    cout << "--------------------------------------------------" << endl;
+                }
+            }
+        } 
+        else if (pilihanMenu == 3) {
+            cout << "\nKeluar dari program. Terima kasih!" << endl;
+        } 
+        else {
+            cout << "\n[Peringatan] Pilihan tidak valid! Masukkan angka 1, 2, atau 3." << endl;
+        }
+
+    } while (pilihanMenu != 3); 
+    return 0;
+}
